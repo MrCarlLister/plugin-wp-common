@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  My common functions
  * Plugin URI:   https://www.mrcarllister.co.uk/
- * Description:  Common functions I use on most sites
+ * Description:  Common functions I use on most sites that disable features I don't use, clean up WP and add functions I use
  * Version:      1.0.0
  * Author:       Carl Lister
  * Author URI:   https://www.mrcarllister.co.uk/
@@ -29,7 +29,7 @@ function dd($array)
  * @param [type] $array
  * @return void
  */
-function ee_mph__create_new_table($table_name,$array)
+function ee__create_new_table($table_name,$array)
 {
    
     global $wpdb;
@@ -70,7 +70,7 @@ function ee_mph__create_new_table($table_name,$array)
  * @param [type] $enq
  * @return void
  */
-function ee_mph__update_table($table_name,$enq)
+function ee__update_table($table_name,$enq)
 {
     global $wpdb;
     $prefix = $wpdb->prefix;
@@ -87,7 +87,7 @@ function ee_mph__update_table($table_name,$enq)
  * @param [type] $menu_name
  * @return mixed
  */
-function ee_mph__get_menu_as_array($menu_name){
+function ee__get_menu_as_array($menu_name){
     if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
         
         $menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
@@ -96,14 +96,14 @@ function ee_mph__get_menu_as_array($menu_name){
     return false; 
 }
 
-function ee_mph__file_types_to_uploads($file_types)
+function ee__file_types_to_uploads($file_types)
 {
     $new_filetypes = array();
     $new_filetypes['svg'] = 'image/svg+xml';
     $file_types = array_merge($file_types, $new_filetypes);
     return $file_types;
 }
-add_action('upload_mimes', 'ee_mph__file_types_to_uploads');
+add_action('upload_mimes', 'ee__file_types_to_uploads');
 
 
 
@@ -114,7 +114,7 @@ add_action('upload_mimes', 'ee_mph__file_types_to_uploads');
  *
  * @return string The content of the SVG you want to load.
  */
-function ee_mph__load_inline_svg($path)
+function ee__load_inline_svg($path)
 {
     if (file_exists($path)) {
 
@@ -149,7 +149,7 @@ add_filter( 'block_editor_settings' , 'remove_guten_wrapper_styles' );
     return $settings;
 }
 
-function remove_menus(){
+function ee__remove_menus(){
     // get current login user's role
     $roles = wp_get_current_user()->roles;
      
@@ -164,13 +164,13 @@ function remove_menus(){
 
 
     }
-    add_action( 'admin_menu', 'remove_menus' , 100 );
+    add_action( 'admin_menu', 'ee__remove_menus' , 100 );
 
 
 /**
  * WordPress function for redirecting users on login based on user role
  */
-function my_login_redirect( $url, $request, $user ){
+function ee__login_redirect( $url, $request, $user ){
     if( $user && is_object( $user ) && is_a( $user, 'WP_User' ) ) {
         if( $user->has_cap( 'administrator' ) ) {
             $url = admin_url();
@@ -181,4 +181,4 @@ function my_login_redirect( $url, $request, $user ){
     return $url;
 }
 
-add_filter('login_redirect', 'my_login_redirect', 10, 3 );
+add_filter('login_redirect', 'ee__login_redirect', 10, 3 );
