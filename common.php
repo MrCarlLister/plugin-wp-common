@@ -85,7 +85,7 @@ function wps_deregister_styles() {
     wp_dequeue_style( 'wp-block-library' );
 }
 
-add_filter( 'block_editor_settings' , 'remove_guten_wrapper_styles' );
+// add_filter( 'block_editor_settings' , 'remove_guten_wrapper_styles' );
  function remove_guten_wrapper_styles( $settings ) {
 
     // dd($settings['styles']);
